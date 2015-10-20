@@ -1,5 +1,48 @@
-<div id="hello"></div>
+<div id="smile"></div>
 
 <script type="text/ng-script">
-d3.select('#hello').text('Hello World!'); 
+  // Select the element
+  var el = d3.select('#smile');
+
+  // Create the SVG
+  var svg = el.append('svg')
+    .attr('width', 100)
+    .attr('height', 100)
+  ;
+
+  // Create circle
+  var circle = svg.append('circle')
+    .attr('cx', 50)
+    .attr('cy', 50)
+    .attr('r', 48)
+    .attr('fill', 'yellow')
+    .attr('stroke', 'gold')
+    .attr('stroke-width', 4)
+  ;
+
+  // Left eye
+  var leftEye = svg.append('ellipse')
+    .attr('cx', 35)
+    .attr('cy', 40)
+    .attr('rx', 6)
+    .attr('ry', 14)
+    .attr('fill', 'black')
+  ;
+
+  // Right eye
+  var rightEye = svg.append('ellipse')
+    .attr('cx', 65)
+    .attr('cy', 40)
+    .attr('rx', 6)
+    .attr('ry', 14)
+    .attr('fill', 'black')
+  ;
+
+  // Smile!
+  var smile = svg.append('path')
+    .attr('d', 'M 20 60 a 40 60 0 0 0 60 0')
+    .attr('stroke', 'black')
+    .attr('stroke-width', '4')
+    .attr('fill', 'none')
+  ;
 </script>
