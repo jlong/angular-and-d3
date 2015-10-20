@@ -1,48 +1,26 @@
-<div id="smile"></div>
+<div id="circles"></div>
 
 <script type="text/ng-script">
   // Select the element
-  var el = d3.select('#smile');
+  var el = d3.select('#circles');
 
   // Create the SVG
   var svg = el.append('svg')
-    .attr('width', 100)
+    .attr('width', 180)
     .attr('height', 100)
   ;
-
-  // Create circle
-  var circle = svg.append('circle')
-    .attr('cx', 50)
-    .attr('cy', 50)
-    .attr('r', 48)
-    .attr('fill', 'yellow')
-    .attr('stroke', 'gold')
-    .attr('stroke-width', 4)
+  
+  // Bind the data
+  var selection = svg.selectAll('circle')
+    .data([1, 2, 3, 2, 1])
   ;
 
-  // Left eye
-  var leftEye = svg.append('ellipse')
-    .attr('cx', 35)
-    .attr('cy', 40)
-    .attr('rx', 6)
-    .attr('ry', 14)
-    .attr('fill', 'black')
-  ;
-
-  // Right eye
-  var rightEye = svg.append('ellipse')
-    .attr('cx', 65)
-    .attr('cy', 40)
-    .attr('rx', 6)
-    .attr('ry', 14)
-    .attr('fill', 'black')
-  ;
-
-  // Smile!
-  var smile = svg.append('path')
-    .attr('d', 'M 20 60 a 40 60 0 0 0 60 0')
-    .attr('stroke', 'black')
-    .attr('stroke-width', '4')
-    .attr('fill', 'none')
+  // Create the cirlces
+  selection.enter()
+    .append('circle')
+      .attr('r', function(d) { return d * 5 })
+      .attr('cx', function(d, i) { return (i + 1) * 30 })
+      .attr('cy', 50)
+      .attr('fill', 'tomato')
   ;
 </script>
