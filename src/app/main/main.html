@@ -9,24 +9,8 @@
   ,   color = 'dodgerblue'
   ;
 
-  // Our data
+  // Initial data
   var data = [1,2,3,6,2,3,8,2,5,3,4,6,11,4];
-
-  // Max, min, and length
-  var max = d3.max(data)
-  ,   min = d3.min([0].concat(data))
-  ,   length = data.length
-  ;
-
-  // Scales
-  var x = d3.scale.linear()
-    .domain([0, length - 1])
-    .range([halfBar, width - halfBar])
-  ;
-  var y = d3.scale.linear()
-    .domain([min, max])
-    .range([0, height])
-  ;
 
   // Select the element
   var chart = d3.select('#bars');
@@ -37,18 +21,56 @@
     .attr('height', height)
   ;
 
-  // Bind the data
-  var selection = svg.selectAll('rect')
-    .data(data)
-  ;
+  function update(series) {
+    // Calculate max, min, and length
+    var max = d3.max(series)
+    ,   min = d3.min([0].concat(series))
+    ,   length = series.length
+    ;
 
-  // Create new bars 
-  selection.enter()
-    .append('rect')
+    // Create scales to help us with the math
+    var x = d3.scale.linear()
+      .domain([0, length - 1])
+      .range([halfBar, width - halfBar])
+    ;
+    var y = d3.scale.linear()
+      .domain([min, max])
+      .range([0, height])
+    ;
+
+    // D3 update pattern:
+
+    // 1) Bind/rebind the data
+    var selection = svg.selectAll('rect')
+      .data(series)
+    ;
+
+    // 2) Add new bars if needed
+    selection.enter()
+      .append('rect')
+        .attr('width', barWidth)
+        .attr('fill', color)
+    ;
+
+    // 3) Update the size and position of all bars
+    selection
       .attr('x', function(d, i) { return x(i) - halfBar })
-      .attr('y', function(d) { return y(max) - y(d); })
-      .attr('width', barWidth)
+      .attr('y', function(d) { return y(max) - y(d) })
       .attr('height', function(d) { return y(d) })
-      .attr('fill', color)
-  ;
+    ;
+
+    // 4) Remove any unneeded bars
+    selection.exit()
+      .remove()
+    ;
+  }
+
+  // Update chart with new data every half second
+  setInterval(function() {
+    data.shift();
+    data.push(Math.ceil(Math.random() * 11));
+    update(data);
+  }, 500);
+
+  update(data);
 </script>
