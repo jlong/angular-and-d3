@@ -1,76 +1,32 @@
-<div id="bars"></div>
+<h1>Bar chart directive</h1>
 
-<script type="text/ng-script">
-  // Basic properties of our graph
-  var width = 200
-  ,   height = 80
-  ,   barWidth = 8
-  ,   halfBar = barWidth / 2
-  ,   color = 'dodgerblue'
-  ;
+<div class="box">
+  <h3 class="mt0">Simple bars</h3>
+  <bar-chart
+    series="simple"
+    width="190"
+    height="80"
+    ></bar-chart>
+</div>
 
-  // Initial data
-  var data = [1,2,3,6,2,3,8,2,5,3,4,6,11,4];
+<div class="box">
+  <h3 class="mt0">Wide bars</h3>
+  <bar-chart
+    series="wide"
+    width="190"
+    height="80"
+    bar-width="15"
+    bar-color="limegreen"
+    ></bar-chart>
+</div>
 
-  // Select the element
-  var chart = d3.select('#bars');
+<div class="box">
+  <h3 class="mt0">Animated bars</h3>
+  <bar-chart
+    series="updating"
+    width="updatingWidth"
+    height="80"
+    bar-color="tomato"
+    ></bar-chart>
+</div>
 
-  // Create the SVG
-  var svg = chart.append('svg')
-    .attr('width', width)
-    .attr('height', height)
-  ;
-
-  function update(series) {
-    // Calculate max, min, and length
-    var max = d3.max(series)
-    ,   min = d3.min([0].concat(series))
-    ,   length = series.length
-    ;
-
-    // Create scales to help us with the math
-    var x = d3.scale.linear()
-      .domain([0, length - 1])
-      .range([halfBar, width - halfBar])
-    ;
-    var y = d3.scale.linear()
-      .domain([min, max])
-      .range([0, height])
-    ;
-
-    // D3 update pattern:
-
-    // 1) Bind/rebind the data
-    var selection = svg.selectAll('rect')
-      .data(series)
-    ;
-
-    // 2) Add new bars if needed
-    selection.enter()
-      .append('rect')
-        .attr('width', barWidth)
-        .attr('fill', color)
-    ;
-
-    // 3) Update the size and position of all bars
-    selection
-      .attr('x', function(d, i) { return x(i) - halfBar })
-      .attr('y', function(d) { return y(max) - y(d) })
-      .attr('height', function(d) { return y(d) })
-    ;
-
-    // 4) Remove any unneeded bars
-    selection.exit()
-      .remove()
-    ;
-  }
-
-  // Update chart with new data every half second
-  setInterval(function() {
-    data.shift();
-    data.push(Math.ceil(Math.random() * 11));
-    update(data);
-  }, 500);
-
-  update(data);
-</script>

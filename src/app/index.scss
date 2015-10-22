@@ -1,7 +1,35 @@
+body {
+  font-family: sans-serif;
+  font-weight: 100;
+  padding: 20px;
+  font-size: 16px;
+  background: #e6e9ec;
+}
+
 .page-content {
   max-width: 980px;
   padding: 20px;
   margin: 0 auto;
+}
+
+h1, h3 {
+  color: #567;
+  margin-top: 0;
+}
+h3 {
+  font-weight: 100;
+}
+
+.box {
+  background: white;
+  float: left;
+  padding: 30px;
+  border-radius: 10px;
+  width: 190px;
+  margin-bottom: 30px;
+}
+.box + .box {
+  margin-left: 30px;
 }
 
 /* gulp-inject */

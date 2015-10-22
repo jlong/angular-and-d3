@@ -3,7 +3,9 @@
 
   angular
     .module('angularAndD3', [
-      'ngScript'
-    ]);
+      'ngScript',
+      'barChart'
+    ])
+  ;
 
 })();
